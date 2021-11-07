@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">To Do</string>
+    <string name="listTitleHint">Enter a title for the task.</string>
+    <string name="listDetailsHint">Enter a task details.</string>
+    <string name="listTitleLabel">Title of the Task</string>
+    <string name="listDetailsLabel">Details of the Task </string>
+    <string name="listCompleteLabel">Complete</string>
+</resources>
