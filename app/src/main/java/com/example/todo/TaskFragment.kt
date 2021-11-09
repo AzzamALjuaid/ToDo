@@ -25,7 +25,8 @@ class TaskFragment : Fragment() {
     private lateinit var task: Task
     private lateinit var titleField: EditText
     private lateinit var detailsField: EditText
-    private lateinit var dateBTN:Button
+    private lateinit var dueDateBTN:Button
+    private lateinit var creationDateBTN:Button
     private lateinit var completeCheckBox: CheckBox
     private val taskDetailViewModel: TaskDetailViewModel by lazy {
         ViewModelProviders.of(this).get(TaskDetailViewModel::class.java)
@@ -46,7 +47,8 @@ class TaskFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_list, container , false)
         titleField = view.findViewById(R.id.listTitle) as EditText
         detailsField = view.findViewById(R.id.listDetailsLabel) as EditText
-        dateBTN = view.findViewById(R.id.dueDate) as Button
+        dueDateBTN = view.findViewById(R.id.dueDate) as Button
+        creationDateBTN = view.findViewById(R.id.creationDateBTN) as Button
         completeCheckBox = view.findViewById(R.id.isComplete) as CheckBox
 
         return view
@@ -132,7 +134,13 @@ class TaskFragment : Fragment() {
             }
         }
 
-        dateBTN.setOnClickListener {
+        dueDateBTN.setOnClickListener {
+            DateFragment().apply {
+                show(this@TaskFragment.requireFragmentManager() , DIALOG_DATE)
+            }
+        }
+
+        creationDateBTN.setOnClickListener {
             DateFragment().apply {
                 show(this@TaskFragment.requireFragmentManager() , DIALOG_DATE)
             }
@@ -148,7 +156,9 @@ class TaskFragment : Fragment() {
     private fun updateUI(){
         titleField.setText(task.title)
         detailsField.setText(task.description)
-        dateBTN.text = task.dueDate.toString()
+        dueDateBTN.text = task.dueDate.toString()
+        creationDateBTN.text = task.creationDate.toString()
+
         completeCheckBox.apply {
             isChecked = task.isComplete
             jumpDrawablesToCurrentState()
