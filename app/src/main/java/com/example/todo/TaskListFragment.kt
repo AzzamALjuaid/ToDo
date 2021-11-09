@@ -3,9 +3,7 @@ package com.example.todo
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -17,16 +15,17 @@ import androidx.recyclerview.widget.RecyclerView
 import java.text.ParsePosition
 import java.util.*
 
+
 class TaskListFragment : Fragment() {
 
     interface Callbacks {
-        fun onTaskSelected(taskid: UUID)
+        fun onTaskSelected(taskId: UUID)
     }
 
     private var callbacks: Callbacks? = null
 
     private lateinit var taskRecyclerView: RecyclerView
-    private var adapter: TaskAdapter? = TaskAdapter(emptyList())
+    private var adapter: TaskAdapter = TaskAdapter(emptyList())
 
     private val taskListViewModel: TaskListViewModel by lazy {
         ViewModelProviders.of(this).get(TaskListViewModel::class.java)
@@ -35,6 +34,11 @@ class TaskListFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         callbacks = context as Callbacks?
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -65,6 +69,23 @@ class TaskListFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         callbacks = null
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_task_list , menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.add_task -> {
+                val task = Task()
+                taskListViewModel.addTask(task)
+                callbacks?.onTaskSelected(task.id)
+                true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 
     private fun updateUI(tasks: List<Task>) {
@@ -111,6 +132,7 @@ class TaskListFragment : Fragment() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
         : TaskHolder {
+            val layoutInflater = LayoutInflater.from(context)
             val view = layoutInflater.inflate(R.layout.list_item_task , parent , false)
             return TaskHolder(view)
 
@@ -126,9 +148,5 @@ class TaskListFragment : Fragment() {
 
         }
 
-    companion object{
-        fun newInstance(): TaskListFragment{
-            return TaskListFragment()
-        }
-    }
+
 }

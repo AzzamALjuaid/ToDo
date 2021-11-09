@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() , TaskListFragment.Callbacks {
             supportFragmentManager.findFragmentById(R.id.fragment_container)
 
         if (currentFragment == null) {
-            val fragment = TaskListFragment.newInstance()
+            val fragment = TaskListFragment()
             supportFragmentManager
                 .beginTransaction()
                 .add(R.id.fragment_container , fragment)

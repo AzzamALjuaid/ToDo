@@ -13,9 +13,12 @@ import android.widget.CheckBox
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import java.util.*
+import androidx.lifecycle.ViewModelProviders
+import kotlinx.android.synthetic.main.fragment_list.view.*
+import java.util.UUID
 
 private const val ARG_TASK_ID = "task_id"
+private const val DIALOG_DATE = "dialogDate"
 
 class TaskFragment : Fragment() {
 
@@ -24,15 +27,15 @@ class TaskFragment : Fragment() {
     private lateinit var detailsField: EditText
     private lateinit var dateBTN:Button
     private lateinit var completeCheckBox: CheckBox
-    private val taskListViewModel: TaskViewModel by lazy {
-        ViewModelProvider(this).get(TaskViewModel::class.java)
+    private val taskDetailViewModel: TaskDetailViewModel by lazy {
+        ViewModelProviders.of(this).get(TaskDetailViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         task = Task()
-        val taskid: UUID = arguments?.getSerializable(ARG_TASK_ID) as UUID
-        taskListViewModel.loadTask(taskid)
+        val taskId: UUID = arguments?.getSerializable(ARG_TASK_ID) as UUID
+        taskDetailViewModel.loadTask(taskId)
     }
 
     override fun onCreateView(
@@ -42,19 +45,16 @@ class TaskFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_list, container , false)
         titleField = view.findViewById(R.id.listTitle) as EditText
+        detailsField = view.findViewById(R.id.listDetailsLabel) as EditText
         dateBTN = view.findViewById(R.id.dueDate) as Button
         completeCheckBox = view.findViewById(R.id.isComplete) as CheckBox
 
-        dateBTN.apply {
-            text = task.dueDate.toString()
-            isEnabled = false
-        }
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        taskListViewModel.taskLiveData.observe(
+        taskDetailViewModel.taskLiveData.observe(
             viewLifecycleOwner,
             Observer { task ->
                 task?.let {
@@ -93,7 +93,38 @@ class TaskFragment : Fragment() {
             }
 
         }
+
+        val detailsWatcher = object : TextWatcher {
+
+            override fun beforeTextChanged(
+                sequence: CharSequence?,
+                start:Int,
+                count:Int,
+                after:Int
+            ) {
+
+            }
+
+            override fun onTextChanged(
+                sequence: CharSequence?,
+                start:Int,
+                before:Int,
+                count:Int
+            ) {
+                task.description = sequence.toString()
+
+            }
+
+            override fun afterTextChanged(sequence: Editable?) {
+
+            }
+
+        }
+
+
+
         titleField.addTextChangedListener(titleWatcher)
+        detailsField.addTextChangedListener(detailsWatcher)
 
         completeCheckBox.apply {
             setOnCheckedChangeListener { _, isChecked ->
@@ -101,21 +132,35 @@ class TaskFragment : Fragment() {
             }
         }
 
+        dateBTN.setOnClickListener {
+            DateFragment().apply {
+                show(this@TaskFragment.requireFragmentManager() , DIALOG_DATE)
+            }
+        }
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        taskDetailViewModel.saveTask(task)
     }
 
     private fun updateUI(){
         titleField.setText(task.title)
         detailsField.setText(task.description)
         dateBTN.text = task.dueDate.toString()
-        completeCheckBox.isChecked = task.isComplete
+        completeCheckBox.apply {
+            isChecked = task.isComplete
+            jumpDrawablesToCurrentState()
+        }
 
     }
 
     companion object{
 
-        fun newInstance(taskid: UUID):TaskFragment {
+        fun newInstance(taskId: UUID):TaskFragment {
             val args = Bundle().apply {
-                putSerializable(ARG_TASK_ID , taskid)
+                putSerializable(ARG_TASK_ID , taskId)
             }
             return TaskFragment().apply {
                 arguments = args

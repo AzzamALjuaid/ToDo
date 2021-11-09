@@ -5,6 +5,9 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.todo.Task
 
+private const val DATABASE_NAME = "task-database"
+
+
 @Database(entities = [Task::class] , version=1)
 @TypeConverters(TaskTypeConverters::class)
 abstract class Taskdatabase : RoomDatabase(){
