@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -28,6 +29,7 @@ class TaskFragment : Fragment() {
     private lateinit var dueDateBTN:Button
     private lateinit var creationDateBTN:Button
     private lateinit var completeCheckBox: CheckBox
+    private lateinit var addImageBTN: ImageButton
 
     private val taskDetailViewModel: TaskDetailViewModel by lazy {
         ViewModelProviders.of(this).get(TaskDetailViewModel::class.java)
@@ -61,6 +63,7 @@ class TaskFragment : Fragment() {
         dueDateBTN = view.findViewById(R.id.dueDate) as Button
         creationDateBTN = view.findViewById(R.id.creationDateBTN) as Button
         completeCheckBox = view.findViewById(R.id.isComplete) as CheckBox
+        addImageBTN = view.findViewById(R.id.AddImageButton) as ImageButton
 
         return view
     }
@@ -145,16 +148,17 @@ class TaskFragment : Fragment() {
             }
         }
 
-        dueDateBTN.setOnClickListener {
-            DateFragment().apply {
-                show(this@TaskFragment.requireFragmentManager() , DIALOG_DATE)
-            }
-        }
 
         creationDateBTN.setOnClickListener {
             DateFragment().apply {
                 show(this@TaskFragment.requireFragmentManager() , DIALOG_DATE)
             }
+        }
+
+        addImageBTN.setOnClickListener {
+            val fragment = TaskListFragment()
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragment_container, fragment)?.addToBackStack(null)?.commit()
         }
 
     }
