@@ -6,4 +6,5 @@
     <string name="listDetailsLabel">Details of the Task </string>
     <string name="listCompleteLabel">Complete</string>
     <string name="add_task">Add Task</string>
+    <string name="delete_task">Delete Task</string>
 </resources>

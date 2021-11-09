@@ -1,10 +1,7 @@
 package com.example.todo.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.example.todo.Task
 import java.util.*
 
@@ -22,4 +19,7 @@ interface TaskDao {
 
     @Insert
     fun addTask(task: Task)
+
+    @Delete
+    fun deleteTask(task: Task)
 }

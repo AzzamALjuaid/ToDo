@@ -1,13 +1,12 @@
 package com.example.todo
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import androidx.lifecycle.Observer
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -22,12 +21,14 @@ private const val DIALOG_DATE = "dialogDate"
 
 class TaskFragment : Fragment() {
 
+    private var callbacks : TaskListFragment.Callbacks? = null
     private lateinit var task: Task
     private lateinit var titleField: EditText
     private lateinit var detailsField: EditText
     private lateinit var dueDateBTN:Button
     private lateinit var creationDateBTN:Button
     private lateinit var completeCheckBox: CheckBox
+
     private val taskDetailViewModel: TaskDetailViewModel by lazy {
         ViewModelProviders.of(this).get(TaskDetailViewModel::class.java)
     }
@@ -37,6 +38,16 @@ class TaskFragment : Fragment() {
         task = Task()
         val taskId: UUID = arguments?.getSerializable(ARG_TASK_ID) as UUID
         taskDetailViewModel.loadTask(taskId)
+        setHasOptionsMenu(true)
+    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as TaskListFragment.Callbacks?
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
     }
 
     override fun onCreateView(
@@ -164,6 +175,24 @@ class TaskFragment : Fragment() {
             jumpDrawablesToCurrentState()
         }
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.delete_task -> {
+                taskDetailViewModel.deletTask(task)
+                val fragment = TaskListFragment()
+                activity?.supportFragmentManager?.beginTransaction()
+                    ?.replace(R.id.fragment_container, fragment)?.addToBackStack(null)?.commit()
+                true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_list , menu)
     }
 
     companion object{
