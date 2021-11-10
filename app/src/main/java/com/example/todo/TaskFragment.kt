@@ -6,12 +6,10 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
+import android.widget.*
 import androidx.lifecycle.Observer
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.ImageButton
 import androidx.fragment.app.Fragment
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_list.view.*
@@ -149,6 +147,13 @@ class TaskFragment : Fragment() {
         }
 
 
+        dueDateBTN.setOnClickListener {
+            DateFragment().apply {
+                show(this@TaskFragment.requireFragmentManager() , DIALOG_DATE)
+            }
+        }
+
+
         creationDateBTN.setOnClickListener {
             DateFragment().apply {
                 show(this@TaskFragment.requireFragmentManager() , DIALOG_DATE)
@@ -159,6 +164,11 @@ class TaskFragment : Fragment() {
             val fragment = TaskListFragment()
             activity?.supportFragmentManager?.beginTransaction()
                 ?.replace(R.id.fragment_container, fragment)?.addToBackStack(null)?.commit()
+            val toast = Toast(context)
+            val view = ImageView(context)
+            view.setImageResource(R.drawable.addcomplete128)
+            toast.setView(view)
+            toast.show()
         }
 
     }
@@ -188,6 +198,11 @@ class TaskFragment : Fragment() {
                 val fragment = TaskListFragment()
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(R.id.fragment_container, fragment)?.addToBackStack(null)?.commit()
+                val toast = Toast(context)
+                val view = ImageView(context)
+                view.setImageResource(R.drawable.delete128)
+                toast.setView(view)
+                toast.show()
                 true
             }
             else -> return super.onOptionsItemSelected(item)

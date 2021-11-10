@@ -12,23 +12,24 @@
     android:layout_marginBottom="3dp"
     android:background="@drawable/back_layout">
 
+
     <TextView
         android:id="@+id/task_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
-        android:layout_marginEnd="200dp"
-        android:fontFamily="@font/amethysta"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/sarala"
         android:text="Task Title"
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/listDetailsLabel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.521"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
-
 
     <TextView
         android:id="@+id/listDetailsLabel"
@@ -38,7 +39,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="200dp"
         android:layout_marginBottom="1dp"
-        android:fontFamily="@font/amethysta"
+        android:fontFamily="@font/sarala"
         android:text="Task description"
         android:textColor="@color/white"
         android:textSize="20sp"
@@ -54,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginEnd="150dp"
-        android:fontFamily="@font/amethysta"
+        android:fontFamily="@font/sarala"
         android:text="Due Date"
         android:textColor="@color/white"
         android:textSize="15sp"

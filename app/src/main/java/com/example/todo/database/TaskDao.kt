@@ -22,4 +22,9 @@ interface TaskDao {
 
     @Delete
     fun deleteTask(task: Task)
+
+    @Query("SELECT * FROM task ORDER BY dueDate")
+    fun sortTask():LiveData<List<Task>>
+
+
 }

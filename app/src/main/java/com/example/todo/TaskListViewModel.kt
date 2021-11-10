@@ -1,5 +1,6 @@
 package com.example.todo
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 
 class TaskListViewModel : ViewModel() {
@@ -13,5 +14,10 @@ class TaskListViewModel : ViewModel() {
 
     fun addTask(task: Task) {
         taskRepository.addTask(task)
+    }
+
+    fun sortTask(): LiveData<List<Task>> {
+       return taskRepository.sortTask()
+
     }
 }

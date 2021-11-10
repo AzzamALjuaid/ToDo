@@ -35,8 +35,14 @@ class TaskRepository private constructor(context: Context) {
         }
     }
 
+    fun sortTask():LiveData<List<Task>> {
+
+           return  taskDao.sortTask()
+
+    }
+
     fun deleteTask(task: Task) {
-        executor.execute {
+         executor.execute {
             taskDao.deleteTask(task)
         }
     }

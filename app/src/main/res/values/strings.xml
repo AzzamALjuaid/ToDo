@@ -7,4 +7,7 @@
     <string name="listCompleteLabel">Complete</string>
     <string name="add_task">Add Task</string>
     <string name="delete_task">Delete Task</string>
+    <string name="adding_task">The Task Add/edit ٍSuccessfully</string>
+    <string name="deleting_task">The Task Deleted ٍSuccessfully</string>
+    <string name="sort">Sort Tasks</string>
 </resources>

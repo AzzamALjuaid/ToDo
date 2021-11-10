@@ -76,6 +76,8 @@ class TaskListFragment : Fragment() {
         inflater.inflate(R.menu.fragment_task_list , menu)
     }
 
+
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.add_task -> {
@@ -86,6 +88,7 @@ class TaskListFragment : Fragment() {
             }
             else -> return super.onOptionsItemSelected(item)
         }
+
     }
 
     private fun updateUI(tasks: List<Task>) {
