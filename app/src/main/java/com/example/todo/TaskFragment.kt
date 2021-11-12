@@ -1,24 +1,26 @@
 package com.example.todo
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.lifecycle.Observer
 import androidx.fragment.app.Fragment
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.example.todo.TaskList.KEY
+import com.example.todo.TaskList.TaskListFragment
+import com.example.todo.TaskList.time
+import com.example.todo.database.Task
 import kotlinx.android.synthetic.main.fragment_list.view.*
-import java.util.UUID
+import java.util.*
 
 private const val ARG_TASK_ID = "task_id"
 private const val DIALOG_DATE = "dialogDate"
+private const val REQUEST_DATE = 0
 
-class TaskFragment : Fragment() {
+class TaskFragment : Fragment() , DateFragment.callbacks {
 
     private var callbacks : TaskListFragment.Callbacks? = null
     private lateinit var task: Task
@@ -36,19 +38,19 @@ class TaskFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         task = Task()
-        val taskId: UUID = arguments?.getSerializable(ARG_TASK_ID) as UUID
+        val taskId= arguments?.getSerializable(KEY) as UUID
         taskDetailViewModel.loadTask(taskId)
         setHasOptionsMenu(true)
     }
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        callbacks = context as TaskListFragment.Callbacks?
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        callbacks = null
-    }
+//    override fun onAttach(context: Context) {
+//        super.onAttach(context)
+//        callbacks = context as TaskListFragment.Callbacks?
+//    }
+//
+//    override fun onDetach() {
+//        super.onDetach()
+//        callbacks = null
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -148,7 +150,8 @@ class TaskFragment : Fragment() {
 
 
         dueDateBTN.setOnClickListener {
-            DateFragment().apply {
+            DateFragment.newInstance(task.dueDate).apply {
+                setTargetFragment(this@TaskFragment , REQUEST_DATE)
                 show(this@TaskFragment.requireFragmentManager() , DIALOG_DATE)
             }
         }
@@ -161,27 +164,31 @@ class TaskFragment : Fragment() {
         }
 
         addImageBTN.setOnClickListener {
+
+            if (task.id == null){
+                taskDetailViewModel.addTask(task)
+            }else {
+                taskDetailViewModel.saveTask(task)
+            }
             val fragment = TaskListFragment()
             activity?.supportFragmentManager?.beginTransaction()
                 ?.replace(R.id.fragment_container, fragment)?.addToBackStack(null)?.commit()
             val toast = Toast(context)
             val view = ImageView(context)
-            view.setImageResource(R.drawable.addcomplete128)
+            view.setImageResource(R.drawable.completed_task)
             toast.setView(view)
             toast.show()
+
+
+
         }
 
-    }
-
-    override fun onStop() {
-        super.onStop()
-        taskDetailViewModel.saveTask(task)
     }
 
     private fun updateUI(){
         titleField.setText(task.title)
         detailsField.setText(task.description)
-        dueDateBTN.text = task.dueDate.toString()
+        dueDateBTN.text = android.text.format.DateFormat.format(time , task.dueDate)
         creationDateBTN.text = task.creationDate.toString()
 
         completeCheckBox.apply {
@@ -196,8 +203,11 @@ class TaskFragment : Fragment() {
             R.id.delete_task -> {
                 taskDetailViewModel.deletTask(task)
                 val fragment = TaskListFragment()
-                activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace(R.id.fragment_container, fragment)?.addToBackStack(null)?.commit()
+                activity?.let { it.supportFragmentManager
+                    .popBackStack()}
+
+//                activity?.supportFragmentManager?.beginTransaction()
+//                    ?.replace(R.id.fragment_container, fragment)?.addToBackStack(null)?.commit()
                 val toast = Toast(context)
                 val view = ImageView(context)
                 view.setImageResource(R.drawable.delete128)
@@ -226,4 +236,21 @@ class TaskFragment : Fragment() {
         }
     }
 
- }
+    override fun onDateSelected(date: Date) {
+        task.dueDate = date
+        updateUI()
+    }
+
+//    override fun onStop() {
+//        if (task.title.isEmpty()){
+//            taskDetailViewModel.deletTask(task)
+//        }else{
+//
+//
+//            taskDetailViewModel.saveTask(task)
+//            super.onStop()
+//    }
+//
+//
+//}
+}

@@ -2,7 +2,6 @@ package com.example.todo.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.todo.Task
 import java.util.*
 
 @Dao
@@ -24,7 +23,11 @@ interface TaskDao {
     fun deleteTask(task: Task)
 
     @Query("SELECT * FROM task ORDER BY dueDate")
-    fun sortTask():LiveData<List<Task>>
+    fun dateSortTask():LiveData<List<Task>>
 
+    @Query("SELECT * FROM task ORDER BY title")
+    fun titleSortTask():LiveData<List<Task>>
 
+    @Query("SELECT * FROM task ORDER BY isComplete = 0")
+    fun completeSortTask():LiveData<List<Task>>
 }

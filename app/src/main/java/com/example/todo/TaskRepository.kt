@@ -3,6 +3,7 @@ package com.example.todo
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.Room
+import com.example.todo.database.Task
 import com.example.todo.database.Taskdatabase
 import java.lang.IllegalStateException
 import java.util.*
@@ -35,10 +36,14 @@ class TaskRepository private constructor(context: Context) {
         }
     }
 
-    fun sortTask():LiveData<List<Task>> {
-
-           return  taskDao.sortTask()
-
+    fun dateSortTask():LiveData<List<Task>> {
+           return  taskDao.dateSortTask()
+    }
+    fun titleSortTask():LiveData<List<Task>> {
+        return  taskDao.titleSortTask()
+    }
+    fun completeSortTask():LiveData<List<Task>> {
+        return  taskDao.completeSortTask()
     }
 
     fun deleteTask(task: Task) {

@@ -67,8 +67,8 @@
 
     <ImageView
         android:id="@+id/task_complete"
-        android:layout_width="47dp"
-        android:layout_height="41dp"
+        android:layout_width="61dp"
+        android:layout_height="46dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

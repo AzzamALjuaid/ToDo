@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.example.todo.database.Task
 import java.util.*
 
 class TaskDetailViewModel () : ViewModel() {
@@ -25,5 +26,9 @@ class TaskDetailViewModel () : ViewModel() {
 
     fun saveTask(task: Task) {
         taskRepository.updateTask(task)
+    }
+
+    fun addTask(task: Task){
+        taskRepository.addTask(task)
     }
 }

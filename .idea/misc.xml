@@ -3,15 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Azzam/AndroidStudioProjects/ToDo/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.125" />
-        <entry key="..\:/Users/Azzam/AndroidStudioProjects/ToDo/app/src/main/res/drawable/back_layout.xml" value="0.2851851851851852" />
-        <entry key="..\:/Users/Azzam/AndroidStudioProjects/ToDo/app/src/main/res/drawable/ic_launcher_background.xml" value="0.125" />
-        <entry key="..\:/Users/Azzam/AndroidStudioProjects/ToDo/app/src/main/res/layout/activity_main.xml" value="0.30757282692521576" />
-        <entry key="..\:/Users/Azzam/AndroidStudioProjects/ToDo/app/src/main/res/layout/fragment_list.xml" value="0.30757282692521576" />
-        <entry key="..\:/Users/Azzam/AndroidStudioProjects/ToDo/app/src/main/res/layout/fragment_task_list.xml" value="0.19572816258877365" />
-        <entry key="..\:/Users/Azzam/AndroidStudioProjects/ToDo/app/src/main/res/layout/list_item_task.xml" value="0.30757282692521576" />
-        <entry key="..\:/Users/Azzam/AndroidStudioProjects/ToDo/app/src/main/res/menu/fragment_list.xml" value="0.1" />
-        <entry key="..\:/Users/Azzam/AndroidStudioProjects/ToDo/app/src/main/res/menu/fragment_task_list.xml" value="0.30757282692521576" />
+        <entry key="..\:/Users/Azzam/Desktop/ToDo/app/src/main/res/layout/fragment_list.xml" value="0.32916666666666666" />
+        <entry key="..\:/Users/Azzam/Desktop/ToDo/app/src/main/res/layout/fragment_task_list.xml" value="0.32916666666666666" />
+        <entry key="..\:/Users/Azzam/Desktop/ToDo/app/src/main/res/layout/list_item_task.xml" value="0.32916666666666666" />
+        <entry key="..\:/Users/Azzam/Desktop/ToDo/app/src/main/res/menu/fragment_list.xml" value="0.32916666666666666" />
       </map>
     </option>
   </component>
@@ -20,12 +15,5 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
-  </component>
-  <component name="VisualizationToolProject">
-    <option name="state">
-      <ProjectState>
-        <option name="scale" value="0.30757282692521576" />
-      </ProjectState>
-    </option>
   </component>
 </project>
