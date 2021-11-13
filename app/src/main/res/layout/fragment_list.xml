@@ -82,34 +82,18 @@
         tools:ignore="MissingConstraints"
         tools:text="Enter Due Date" />
 
-    <Button
-        android:id="@+id/creationDateBTN"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="5dp"
-        android:hint="Enter Creation Date"
-        android:padding="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dueDate"
-        tools:ignore="MissingConstraints"
-        tools:text="Enter Creation Date" />
-
     <CheckBox
         android:id="@+id/isComplete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="140dp"
         android:layout_marginEnd="5dp"
         android:text="@string/listCompleteLabel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/creationDateBTN"
+        app:layout_constraintTop_toBottomOf="@+id/dueDate"
         tools:ignore="MissingConstraints" />
 
     <ImageButton
@@ -122,10 +106,24 @@
         android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/isComplete"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.252"
         app:srcCompat="@drawable/done2" />
+
+    <TextView
+        android:id="@+id/creationDateBTN"
+        android:layout_width="216dp"
+        android:layout_height="92dp"
+        android:fontFamily="@font/sarala"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@+id/isComplete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dueDate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

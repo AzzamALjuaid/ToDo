@@ -29,7 +29,7 @@ class TaskFragment : Fragment() , DateFragment.callbacks {
     private lateinit var titleField: EditText
     private lateinit var detailsField: EditText
     private lateinit var dueDateBTN:Button
-    private lateinit var creationDateBTN:Button
+    private lateinit var creationDateBTN:TextView
     private lateinit var completeCheckBox: CheckBox
     private lateinit var addImageBTN: ImageButton
 
@@ -63,7 +63,7 @@ class TaskFragment : Fragment() , DateFragment.callbacks {
         titleField = view.findViewById(R.id.listTitle) as EditText
         detailsField = view.findViewById(R.id.listDetailsLabel) as EditText
         dueDateBTN = view.findViewById(R.id.dueDate) as Button
-        creationDateBTN = view.findViewById(R.id.creationDateBTN) as Button
+        creationDateBTN = view.findViewById(R.id.creationDateBTN) as TextView
         creationDateBTN.apply {
             isEnabled=false }
         completeCheckBox = view.findViewById(R.id.isComplete) as CheckBox
@@ -199,6 +199,7 @@ class TaskFragment : Fragment() , DateFragment.callbacks {
         detailsField.setText(task.description)
         dueDateBTN.text = android.text.format.DateFormat.format(time , task.dueDate)
         creationDateBTN.text = task.creationDate.toString()
+        creationDateBTN.setText("Creation Date: \n${android.text.format.DateFormat.format(time , task.creationDate)}")
 
         completeCheckBox.apply {
             isChecked = task.isComplete
