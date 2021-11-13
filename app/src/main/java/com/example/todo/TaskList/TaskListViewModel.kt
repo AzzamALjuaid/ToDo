@@ -18,6 +18,10 @@ class TaskListViewModel : ViewModel() {
         taskRepository.addTask(task)
     }
 
+    fun saveTask(task: Task) {
+        taskRepository.updateTask(task)
+    }
+
     fun dateSortTask(): LiveData<List<Task>> {
         return taskRepository.dateSortTask()
     }

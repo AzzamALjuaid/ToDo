@@ -1,5 +1,6 @@
 package com.example.todo
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,6 +12,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.example.todo.TaskList.KEY
 import com.example.todo.TaskList.TaskListFragment
+import com.example.todo.TaskList.TaskListViewModel
 import com.example.todo.TaskList.time
 import com.example.todo.database.Task
 import kotlinx.android.synthetic.main.fragment_list.view.*
@@ -62,6 +64,8 @@ class TaskFragment : Fragment() , DateFragment.callbacks {
         detailsField = view.findViewById(R.id.listDetailsLabel) as EditText
         dueDateBTN = view.findViewById(R.id.dueDate) as Button
         creationDateBTN = view.findViewById(R.id.creationDateBTN) as Button
+        creationDateBTN.apply {
+            isEnabled=false }
         completeCheckBox = view.findViewById(R.id.isComplete) as CheckBox
         addImageBTN = view.findViewById(R.id.AddImageButton) as ImageButton
 
@@ -158,29 +162,34 @@ class TaskFragment : Fragment() , DateFragment.callbacks {
 
 
         creationDateBTN.setOnClickListener {
-            DateFragment().apply {
+            DateFragment.newInstance(task.creationDate).apply {
+                setTargetFragment(this@TaskFragment , REQUEST_DATE)
                 show(this@TaskFragment.requireFragmentManager() , DIALOG_DATE)
             }
         }
 
         addImageBTN.setOnClickListener {
 
-            if (task.id == null){
-                taskDetailViewModel.addTask(task)
-            }else {
-                taskDetailViewModel.saveTask(task)
-            }
+//            taskDetailViewModel.addTask(task)
+            if (task.title.isEmpty()) {
+                taskDetailViewModel.deletTask(task)
+//                taskDetailViewModel.saveTask(task)
+            }else{
+                taskDetailViewModel.saveTask(task)}
+
             val fragment = TaskListFragment()
             activity?.supportFragmentManager?.beginTransaction()
                 ?.replace(R.id.fragment_container, fragment)?.addToBackStack(null)?.commit()
-            val toast = Toast(context)
-            val view = ImageView(context)
-            view.setImageResource(R.drawable.completed_task)
-            toast.setView(view)
-            toast.show()
 
+            if (task.title.isEmpty()){
 
-
+            }else {
+                val toast = Toast(context)
+                val view = ImageView(context)
+                view.setImageResource(R.drawable.completed_task)
+                toast.setView(view)
+                toast.show()
+            }
         }
 
     }
@@ -195,7 +204,6 @@ class TaskFragment : Fragment() , DateFragment.callbacks {
             isChecked = task.isComplete
             jumpDrawablesToCurrentState()
         }
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -241,16 +249,12 @@ class TaskFragment : Fragment() , DateFragment.callbacks {
         updateUI()
     }
 
-//    override fun onStop() {
-//        if (task.title.isEmpty()){
-//            taskDetailViewModel.deletTask(task)
-//        }else{
-//
-//
-//            taskDetailViewModel.saveTask(task)
-//            super.onStop()
-//    }
-//
-//
-//}
+    override fun onStop() {
+        if (task.title.isEmpty()){
+            taskDetailViewModel.deletTask(task)
+        }else{
+            taskDetailViewModel.saveTask(task)
+    }
+        super.onStop()
+}
 }

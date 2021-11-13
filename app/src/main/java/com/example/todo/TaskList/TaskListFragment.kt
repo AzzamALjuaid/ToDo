@@ -13,9 +13,12 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todo.R
+import com.example.todo.TaskDetailViewModel
 import com.example.todo.database.Task
 import com.example.todo.TaskFragment
+import java.text.SimpleDateFormat
 import java.util.*
+import java.util.logging.SimpleFormatter
 
 const val time="dd/MMMM/yyyy"
 const val KEY = "TaskFragment"
@@ -90,6 +93,11 @@ class TaskListFragment : Fragment() {
             R.id.add_task -> {
                 val task = Task()
                 taskListViewModel.addTask(task)
+//                if (task.title.isEmpty()){
+//                    taskListViewModel.deleteTask(task)
+//                }
+//                else{
+//                taskListViewModel.saveTask(task)}
                 val args=Bundle()
                 args.putSerializable(KEY , task.id)
                 val fragment= TaskFragment()
@@ -196,8 +204,11 @@ class TaskListFragment : Fragment() {
             titleTextView.text = this.task.title
             descriptionTextView.text = this.task.description
 //            dueDate.setText() =DateFormat.format(time,task.dueDate).toString()
-            dateTextView.text = this.task.dueDate.toString()
+//            dateTextView.text = this.task.dueDate.toString()
+            val tames=SimpleDateFormat(time)
+//            val tamesAfter=task.dueDate
 
+            dateTextView.text = tames.format(task.dueDate)
             val date=Date()
             if (task.isComplete) {
                 completeImageView.setImageResource(R.drawable.is_complete)
