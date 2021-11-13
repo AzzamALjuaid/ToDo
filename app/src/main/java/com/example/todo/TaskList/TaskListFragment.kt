@@ -25,6 +25,7 @@ const val KEY = "TaskFragment"
 
 class TaskListFragment : Fragment() {
     var sortStep: Int = 1
+    var filterStep: Int = 1
 
     interface Callbacks {
         fun onTaskSelected(taskId: UUID)
@@ -150,6 +151,37 @@ class TaskListFragment : Fragment() {
                     sortStep=1
                   }
 
+                true
+            }
+
+            R.id.filter_tasks -> {
+
+                if (filterStep == 1){
+                taskListViewModel.comleteFilter().observe(
+                    viewLifecycleOwner, Observer {
+                        updateUI(it)
+                        val toast = Toast(context)
+                        val view = ImageView(context)
+                        view.setImageResource(R.drawable.is_complete)
+                        toast.setView(view)
+                        toast.show()
+                    }
+
+                )
+                    filterStep++
+                }else if (filterStep == 2){
+                    taskListViewModel.inComleteFilter().observe(
+                        viewLifecycleOwner, Observer {
+                            updateUI(it)
+                            val toast = Toast(context)
+                            val view = ImageView(context)
+                            view.setImageResource(R.drawable.passdate)
+                            toast.setView(view)
+                            toast.show()
+                        }
+                    )
+                    filterStep=1
+                }
                 true
             }
             else -> return super.onOptionsItemSelected(item)

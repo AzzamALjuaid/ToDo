@@ -46,6 +46,14 @@ class TaskRepository private constructor(context: Context) {
         return  taskDao.completeSortTask()
     }
 
+    fun completeFilter():LiveData<List<Task>>{
+        return  taskDao.completeFilter()
+    }
+
+    fun inCompleteFilter():LiveData<List<Task>>{
+        return taskDao.inCompleteFilter()
+    }
+
     fun deleteTask(task: Task) {
          executor.execute {
             taskDao.deleteTask(task)

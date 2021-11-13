@@ -33,4 +33,11 @@ class TaskListViewModel : ViewModel() {
     fun completeSortTask(): LiveData<List<Task>> {
         return taskRepository.completeSortTask()
     }
+
+    fun comleteFilter(): LiveData<List<Task>>{
+        return taskRepository.completeFilter()
+    }
+    fun inComleteFilter():LiveData<List<Task>>{
+        return taskRepository.inCompleteFilter()
+    }
 }

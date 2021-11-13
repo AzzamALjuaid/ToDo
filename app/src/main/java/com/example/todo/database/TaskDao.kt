@@ -30,4 +30,9 @@ interface TaskDao {
 
     @Query("SELECT * FROM task ORDER BY isComplete = 0")
     fun completeSortTask():LiveData<List<Task>>
+
+    @Query("SELECT * FROM task WHERE isComplete = 0")
+    fun inCompleteFilter():LiveData<List<Task>>
+    @Query("SELECT * FROM task WHERE isComplete = 1")
+    fun completeFilter():LiveData<List<Task>>
 }
